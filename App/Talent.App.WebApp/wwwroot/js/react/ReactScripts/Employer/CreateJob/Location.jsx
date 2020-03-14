@@ -9,13 +9,10 @@ export class Location extends React.Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
-    componentDidMount() {
-
-    }
-    
 
     handleChange(event) {
         var data = Object.assign({}, this.props.location);
+        
         //required
         const name = event.target.name;
         let value = event.target.value;
@@ -69,7 +66,7 @@ export class Location extends React.Component {
             </select>
             <div style={{ marginBottom:"5px", marginTop:"5px" }}></div>
             {citiesOptions}
-            </div>
+        </div>
         )
     }
     

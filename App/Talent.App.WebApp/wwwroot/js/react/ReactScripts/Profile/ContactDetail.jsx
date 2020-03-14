@@ -29,11 +29,15 @@ export class IndividualDetailSection extends Component {
     }
 
     openEdit() {
+        console.log(this.props.details)
         const details = Object.assign({}, this.props.details)
+        console.log(details)
+        
         this.setState({
             showEditSection: true,
             newContact: details
         })
+        console.log(this.state)
     }
 
     closeEdit() {
@@ -43,6 +47,7 @@ export class IndividualDetailSection extends Component {
     }
 
     handleChange(event) {
+        console.log(this.state.newContact)
         const data = Object.assign({}, this.state.newContact)
         data[event.target.name] = event.target.value
         this.setState({
@@ -54,6 +59,7 @@ export class IndividualDetailSection extends Component {
         console.log(this.props.componentId)
         console.log(this.state.newContact)
         const data = Object.assign({}, this.state.newContact)
+        console.log(data+"DATA")
         this.props.controlFunc(this.props.componentId, data)
         this.closeEdit()
     }

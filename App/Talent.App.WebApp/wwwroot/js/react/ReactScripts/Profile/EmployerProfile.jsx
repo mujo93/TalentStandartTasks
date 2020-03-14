@@ -4,7 +4,6 @@ import { ChildSingleInput } from '../Form/SingleInput.jsx';
 import { FormErrors } from '../Form/FormErrors.jsx';
 import FormItemWrapper from '../Form/FormItemWrapper.jsx';
 import { Name } from './Name.jsx';
-import { Description } from './Description.jsx';
 import { Toggle } from './Toggle.jsx';
 import AuthenticatingBanner from '../Layout/Banner/AuthenticatingBanner.jsx';
 import { LoggedInNavigation } from '../Layout/LoggedInNavigation.jsx';

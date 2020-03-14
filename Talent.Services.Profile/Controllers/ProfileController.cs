@@ -137,16 +137,29 @@ namespace Talent.Services.Profile.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "talent")]
         public async Task<IActionResult> GetLanguages()
         {
+            var userId = _userAppContext.CurrentUserId;
+            var language = await _userLanguageRepository.GetByIdAsync(userId);
+            Console.WriteLine(language);
             //Your code here;
             throw new NotImplementedException();
         }
 
         [HttpPost("addLanguage")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "talent")]
-        public ActionResult AddLanguage([FromBody] AddLanguageViewModel language)
+        public async Task<IActionResult> AddLanguage([FromBody] AddLanguageViewModel language)
         {
-            //Your code here;
-            throw new NotImplementedException();
+            language.CurrentUserId = _userAppContext.CurrentUserId;
+            var isLanguageAdded = _profileService.AddNewLanguage(language);
+
+            if (ModelState.IsValid)
+            {
+                if (isLanguageAdded)
+                {
+                    return Json(new { Success = true });
+                }
+            }
+            return Json(new { Success = false });
+            //throw new NotImplementedException();
         }
 
         [HttpPost("updateLanguage")]
@@ -242,8 +255,21 @@ namespace Talent.Services.Profile.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "talent")]
         public async Task<ActionResult> UpdateProfilePhoto()
         {
-            //Your code here;
-            throw new NotImplementedException();
+            var talentId = _userAppContext.CurrentUserId;
+            IFormFile file = Request.Form.Files[0];
+
+
+            if (ModelState.IsValid)
+            {
+
+                if (await _profileService.UpdateTalentPhoto(talentId, file ))
+                {
+                    return Json(new { Success = true, Message="Profile photo has been updated successfully."});
+                }
+            }
+            return Json(new { Success = false });
+
+            
         }
 
         [HttpPost("updateTalentCV")]
@@ -424,6 +450,7 @@ namespace Talent.Services.Profile.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 if (await _profileService.UpdateTalentProfile(profile, _userAppContext.CurrentUserId))
                 {
                     return Json(new { Success = true });
